@@ -2599,7 +2599,78 @@
       Id: "C1_397000000A_000164"
 }];
 */
-var xhr = new XMLHttpRequest();
+
+//JSONP
+//JSONP
+function getData(str){
+  var data=str.result.records;
+  // 過濾成乾淨的區域陣列到 areaList
+  var areaList=[];
+  for(var i=0;data.length>i;i++){
+    areaList.push(data[i].Zone);
+  }
+
+  // 再用 foreach 去判斷陣列裡面所有值是否有吻合
+  var area =[];
+  areaList.forEach(function(value) {
+    if (area.indexOf(value) == -1) {
+        area.push(value);
+    }
+  });
+
+
+  function updateDist(){
+    var msg='';
+    for(i=0; i<area.length;i++){
+      msg+= '<option value="'+ area[i] + '">'+ area[i] + '</option>';
+    }document.querySelector('.dist-list').innerHTML= '<option value="選擇" disabled selected>--請選擇行政區--</option>' + msg;
+  }
+  updateDist();
+//下拉選單
+function getData(){
+  var dis = document.getElementsByTagName('select')[0].value;
+  console.log(dis);
+  var len = data.length;
+  var str ='';
+  for(i=0; i<len;i++){
+    if(data[i].Zone == dis){
+      var name = data[i].Name;
+      var openTime = data[i].Opentime;
+      var add = data[i].Add;
+      var tel = data[i].Tel;
+      var fee = data[i].Ticketinfo;
+      var picture = data[i].Picture1;
+      var website = data[i].Website;
+          str += '<li><div class="spot-img" style="background-image: url('+ picture + ')">' ;
+          str +=  '<h3><a href="'+ website +'"target="_blank">'+ name + '</a></h3>';
+          str +=  '<h4>'+ dis + '</h4></div>';
+          str +=  '<div class="spot-detail"><ul><li id="openTime"><img src="img/icons_clock.png" alt="opentime"><h5>' + openTime + '</h5></li>';
+          str +=  '<li id="add"><img src="img/icons_pin.png" alt="location"><h5>'+ add +'</h5></li>';
+          str +=  '<li id="tel"><img src="img/icons_phone.png" alt="phone"><h5>'+ tel + '</h5></li>';
+          str +=  '<li id="fee"><img src="img/icons_tag.png" alt="fee"><h5>'+ fee +'</h5></li>';
+          str +=  '</ul></div></li>';
+
+      };
+  }
+  document.querySelector('.data').innerHTML=str;
+}
+
+ document.getElementsByTagName('select')[0].addEventListener('change', getData, false);
+
+//熱門區域
+  $('.hot').on('click',(function(e){
+   e.preventDefault();
+    if($(this).text()){
+    $('select').val($(this).text());}
+    getData();
+
+    }))
+}
+
+
+
+//AJAX
+/*var xhr = new XMLHttpRequest();
 var data='';
 xhr.open('get','http://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97',true);
 xhr.send(null);
@@ -2667,8 +2738,10 @@ function getData(){
     getData();
 
     }))
-}
+}*/
 
+
+//直接把資料抓進JS
 /*$(document).ready(function(){
 
   // 過濾成乾淨的區域陣列到 areaList
