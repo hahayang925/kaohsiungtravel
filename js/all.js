@@ -2601,8 +2601,7 @@
 */
 
 //JSONP
-//JSONP
-function getData(str){
+/*function getData(str){
   var data=str.result.records;
   // 過濾成乾淨的區域陣列到 areaList
   var areaList=[];
@@ -2666,13 +2665,13 @@ function getData(){
 
     }))
 }
-
+*/
 
 
 //AJAX
-/*var xhr = new XMLHttpRequest();
+var xhr = new XMLHttpRequest();
 var data='';
-xhr.open('get','http://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97',true);
+xhr.open('get','https://hahayang925.github.io/kaohsiungtravel/all.json',true);
 xhr.send(null);
 xhr.onload=function(){
   var str=JSON.parse(xhr.responseText);
@@ -2738,7 +2737,7 @@ function getData(){
     getData();
 
     }))
-}*/
+}
 
 
 //直接把資料抓進JS
